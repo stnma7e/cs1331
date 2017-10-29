@@ -25,5 +25,22 @@ public class Main {
         assert !a1.equals(h8);
 
         System.out.println("HERE");
+        try {
+            new Square("a1");
+        } catch (InvalidSquareException e) {
+            System.out.println("InvalidSquareException for valid square: " + e.getMessage());
+        }
+        try {
+            String invalidSquare = "a9";
+            new Square(invalidSquare);
+            System.out.println("No InvalidSquareException for invalid square: " + invalidSquare);
+        } catch (InvalidSquareException e) {
+            // Success
+        }
+        Square s = new Square("f7");
+        assert 'f' == s.getFile();
+        assert '7' == s.getRank();
+        Square s2 = new Square('e', '4');
+        assert "e4" == s2.toString();
     }
 }

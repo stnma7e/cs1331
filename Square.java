@@ -11,8 +11,12 @@ public class Square {
      * Creates a Square with specified rank and file.
      */
     public Square(char file, char rank) {
-        assert file >= 'a' && file <= 'h';
-        assert rank >= '1' && rank <= '8';
+        if (rank < '1' || rank > '8'
+            || file < 'a' || file > 'h') {
+            char[] badSquare = new char[] {file, rank};
+            throw new InvalidSquareException(new String(badSquare));
+        }
+
         this.file = file;
         this.rank = rank;
     }
