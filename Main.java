@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Piece knight = new Knight(Color.BLACK);
@@ -42,5 +45,13 @@ public class Main {
         assert '7' == s.getRank();
         Square s2 = new Square('e', '4');
         assert "e4" == s2.toString();
+
+        SquareSet ss = new SquareSet();
+        ss.add(s);
+        ss.addAll(Arrays.asList(new Square[] {s, s2, null}));
+
+        for (Square s1 : ss) {
+            System.out.println(s1.toString());
+        }
     }
 }

@@ -52,6 +52,11 @@ public class Square {
     }
 
     @Override
+    public int hashCode() {
+        return this.file * 100 + this.rank;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Square)) {
             return false;
