@@ -48,10 +48,20 @@ public class Main {
 
         SquareSet ss = new SquareSet();
         ss.add(s);
-        ss.addAll(Arrays.asList(new Square[] {s, s2, null}));
+        ss.addAll(Arrays.asList(new Square[] {s, s2}));
 
         for (Square s1 : ss) {
             System.out.println(s1.toString());
+        }
+
+        System.out.println("HREEREERER");
+        Square[] bas = new Square[0];
+        for (Square s1 : ss.toArray(bas)) {
+            if (s1 != null) {
+                System.out.println(s1.toString());
+            } else {
+                System.out.println("null");
+            }
         }
     }
 }
