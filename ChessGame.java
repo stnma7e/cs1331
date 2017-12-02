@@ -1,106 +1,58 @@
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-/**
- * Stores all the moves during a chess game.
- *
- * @author sdelmerico3
- * @version 0.0.1
- */
 public class ChessGame {
-    private List<Move> moves;
 
-    /**
-     * Creates a ChessGame with a starting List of moves.
-     *
-     * @param moves The list of moves that will be used to define the game.
-     */
-    ChessGame(List<Move> moves) {
-        this.moves = moves;
+    private StringProperty event = new SimpleStringProperty(this, "NA");
+    private StringProperty site = new SimpleStringProperty(this, "NA");
+    private StringProperty date = new SimpleStringProperty(this, "NA");
+    private StringProperty white = new SimpleStringProperty(this, "NA");
+    private StringProperty black = new SimpleStringProperty(this, "NA");
+    private StringProperty result = new SimpleStringProperty(this, "NA");
+    private List<String> moves;
+
+    public ChessGame(String event, String site, String date,
+                     String white, String black, String result) {
+        this.event.set(event);
+        this.site.set(site);
+        this.date.set(date);
+        this.white.set(white);
+        this.black.set(black);
+        this.result.set(result);
+        moves = new ArrayList<>();
     }
 
-    /**
-     * @return The nth Move in the ChessGame.
-     */
-    Move getMove(int n) {
-        if (n < moves.size()) {
-            return moves.get(n);
-        } else {
-            return null;
-        }
+    public void addMove(String move) {
+        moves.add(move);
     }
 
-    /**
-     * @return All the moves that have occured in the ChessGame.
-     */
-    List<Move> getMoves() {
-        return this.moves;
+    public String getMove(int n) {
+        return moves.get(n - 1);
     }
 
-    /**
-     * @return All the moves that are validated by the filter.
-     *
-     * @param filter The filter that will be applied to the moves List.
-     */
-    List<Move> filter(Predicate<Move> filter) {
-        return moves.stream().filter(filter).collect(Collectors.toList());
+    public String getEvent() {
+        return event.get();
     }
 
-    /**
-     * @return All moves that contain a valid comment.
-     */
-    List<Move> getMovesWithComment() {
-        return filter(move -> {
-                return move.getWhite().getComment().isPresent()
-                    || move.getBlack().getComment().isPresent();
-            });
+    public String getSite() {
+        return site.get();
     }
 
-    /**
-     * @return All moves that don't contain a valid comment.
-     */
-    List<Move> getMovesWithoutComment() {
-        return filter(new Predicate<Move>() {
-                public boolean test(Move move) {
-                    return !(move.getWhite().getComment().isPresent()
-                        || move.getBlack().getComment().isPresent());
-                }
-        });
+    public String getDate() {
+        return date.get();
     }
 
-    /**
-     * @param p is the Piece whose type will be used to filter the moves List.
-     *
-     * @return All moves that are made by a certain type of piece.
-     */
-    List<Move> getMovesWithPiece(Piece p) {
-        return filter(new GetMovesWithPiece(p));
+    public String getWhite() {
+        return white.get();
     }
 
-    /**
-     * Used to filter a ChessGame moves list by returning all moves with that
-     * are made by a certain type of piece.
-     *
-     * @author sdelmerico3
-     */
-    private static class GetMovesWithPiece implements Predicate<Move> {
-        private Piece p;
+    public String getBlack() {
+        return black.get();
+    }
 
-        /**
-         * Creates a class of GetMovesWithPiece with the passed Piece.
-         *
-         * @param p Piece whose type is to be used.
-         */
-        GetMovesWithPiece(Piece p) {
-            this.p = p;
-        }
-
-        @Override
-        public boolean test(Move move) {
-            String n = p.algebraicName();
-            return move.getWhite().getPiece().algebraicName() == n
-                    || move.getBlack().getPiece().algebraicName() == n;
-        }
+    public String getResult() {
+        return result.get();
     }
 }
